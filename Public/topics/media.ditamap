@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE map PUBLIC "-//OASIS//DTD DITA Map//EN" "map.dtd">
+<map id="map_id_media" title="media Map">
+	<topicref href="scrubs.md" format="markdown" />
+	<topicref href="cheers.md" format="markdown" />
+	<topicref href="Homer-Simpson.md" format="markdown" />
+	<topicref href="AbeSimpson.md" format="markdown" />
+	<topicref href="MargeSimpson.md" format="markdown" />
+	<topicref href="MonaSimpson.md" format="markdown" />
+	<topicref href="BartSimpson.md" format="markdown" />
+	<topicref href="LisaSimpson.md" format="markdown" />
+	<topicref href="MaggieSimpson.md" format="markdown" />
+</map>
