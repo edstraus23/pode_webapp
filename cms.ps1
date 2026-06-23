@@ -2,6 +2,8 @@ Import-Module Pode
 Import-Module Pode.Web
 Import-Module PSSQLite
 
+
+
 Start-PodeServer {
     Add-PodeEndpoint -Address localhost -Port 8081 -Protocol Http -Name User
     #Add-PodeEndpoint -Address localhost -Port 8090 -Protocol Http -Name Admin
@@ -14,6 +16,10 @@ Start-PodeServer {
     # this will bind the site to the Admin endpoint
     Use-PodeWebTemplates -Title "Memory Catcher" -Theme Light -EndpointName User
 
+    # Define database path
+    
+    #$global:outpath = "/home/eric/dev/pode_webapp/Public/topics/"
+    $global:dbpath = "/home/eric/dev/pode_webapp/data.db"
 
  # Define the Home Page
     Set-PodeWebHomePage -Layouts @(
@@ -37,7 +43,6 @@ Start-PodeServer {
             ) -ScriptBlock {
                 
                 Write-Host 'Submit button clicked!'
-                # 'UUU1' + $WebEvent.Data['Multiline'] | Out-Default
                   
                   $global:multiline = $WebEvent.Data['Multiline'] 
                  
@@ -76,8 +81,7 @@ Start-PodeServer {
         )
 
            New-PodeWebForm -Name 'Example1' -ScriptBlock {
-            # $WebEvent.Data | Out-Default
-            # 'UUU2' + $multiline | Out-Default
+            
 
             $MediaFileName = $WebEvent.Data['MediaFileName']
             $MediaTitle = $WebEvent.Data['MediaTitle']
@@ -91,13 +95,13 @@ Start-PodeServer {
             $Description = $multiline
             
             # Create md file
-            $outfile = "/home/eric/dev/pode_test1/Public/topics/" + $MediaFileName + ".md"
+            $outfile = "/home/eric/dev/pode_webapp/public/topics/" + $MediaFileName + ".md"
             $title = "# " + $MediaTitle
             Set-Content -Path $outfile -Value $title
             Add-Content -Path $outfile -Value $Description
 
              # Define database path
-                $global:Database = "/home/eric/dev/pode_test1/data.db"
+                $global:Database = "/home/eric/dev/pode_webapp/data.db"
 
                 # Create a Table
                 $QueryCreate = "CREATE TABLE IF NOT EXISTS Media (Id INTEGER PRIMARY KEY, MediaFileName TEXT, MediaTitle TEXT, MediaType TEXT, 
@@ -110,7 +114,7 @@ Start-PodeServer {
 
                 # Select Data
                 $Media = Invoke-SqliteQuery -Query "SELECT * FROM Media" -DataSource $Database
-                $Media | Format-Table | Out-Default
+                
 
                 Move-PodeWebUrl -Url '/pages/thankyou'
 
@@ -145,7 +149,7 @@ Start-PodeServer {
             ) -ScriptBlock {
                 
                 Write-Host 'Submit button clicked!'
-                # 'UUU1' + $WebEvent.Data['Multiline'] | Out-Default
+               
                   
                   $global:multiline = $WebEvent.Data['Multiline'] 
                  
@@ -184,8 +188,6 @@ Start-PodeServer {
         )
 
            New-PodeWebForm -Name 'People1' -ScriptBlock {
-            # $WebEvent.Data | Out-Default
-            # 'UUU2' + $multiline | Out-Default
 
             $PeopleFileName = $WebEvent.Data['PeopleFileName']
             $PeopleTitle = $WebEvent.Data['PeopleTitle']
@@ -207,16 +209,16 @@ Start-PodeServer {
             $Tags = $WebEvent.Data['Tags']
             $Description = $multiline
             
-            "YYY" + $PeopleFileName  | Out-Default
+            
             # Create md file
-            $outfile = "/home/eric/dev/pode_test1/Public/topics/" + $PeopleFileName + ".md"
+            $outfile = "/home/eric/dev/pode_webapp/public/topics/" + $PeopleFileName + ".md"
             $title = "# " + $PeopleTitle
             Set-Content -Path $outfile -Value $title
             Add-Content -Path $outfile -Value $Description
             
 
              # Define database path
-                $global:Database = "/home/eric/dev/pode_test1/data.db"
+                $global:Database = "/home/eric/dev/pode_webapp/data.db"
 
                 # Create a Table
                 $QueryCreate = "CREATE TABLE IF NOT EXISTS People (Id INTEGER PRIMARY KEY, PeopleFileName TEXT, 
@@ -236,7 +238,7 @@ Start-PodeServer {
 
                 # Select Data
                 $People = Invoke-SqliteQuery -Query "SELECT * FROM People" -DataSource $Database
-                $People | Format-Table | Out-Default
+                
 
                 Move-PodeWebUrl -Url '/pages/thankyou'
 
@@ -282,7 +284,7 @@ Start-PodeServer {
             ) -ScriptBlock {
                 
                 Write-Host 'Submit button clicked!'
-                # 'UUU1' + $WebEvent.Data['Multiline'] | Out-Default
+               
                   
                   $global:multiline = $WebEvent.Data['Multiline'] 
                  
@@ -321,9 +323,7 @@ Start-PodeServer {
         )
 
            New-PodeWebForm -Name 'Events1' -ScriptBlock {
-            # $WebEvent.Data | Out-Default
-            # 'UUU2' + $multiline | Out-Default
-
+           
             $EventFileName = $WebEvent.Data['EventFileName']
             $EventTitle = $WebEvent.Data['EventTitle']
             $EventType = $WebEvent.Data['EventType']
@@ -336,13 +336,13 @@ Start-PodeServer {
             $Description = $multiline
             
             # Create md file
-            $outfile = "/home/eric/dev/pode_test1/Public/topics/" + $EventFileName + ".md"
+            $outfile = "/home/eric/dev/pode_webapp/public/topics/" + $EventFileName + ".md"
             $title = "# " + $EventTitle
             Set-Content -Path $outfile -Value $title
             Add-Content -Path $outfile -Value $Description
 
              # Define database path
-                $global:Database = "/home/eric/dev/pode_test1/data.db"
+                $global:Database = "/home/eric/dev/pode_webapp/data.db"
 
                 # Create a Table
                 $QueryCreate = "CREATE TABLE IF NOT EXISTS Events (Id INTEGER PRIMARY KEY, EventFileName TEXT, EventTitle TEXT, EventType TEXT, 
@@ -355,7 +355,7 @@ Start-PodeServer {
 
                 # Select Data
                 $Events = Invoke-SqliteQuery -Query "SELECT * FROM Events" -DataSource $Database
-                $Events | Format-Table | Out-Default
+               
 
                 Move-PodeWebUrl -Url '/pages/thankyou'
 
@@ -390,7 +390,7 @@ Start-PodeServer {
             ) -ScriptBlock {
                 
                 Write-Host 'Submit button clicked!'
-                # 'UUU1' + $WebEvent.Data['Multiline'] | Out-Default
+                
                   
                   $global:multiline = $WebEvent.Data['Multiline'] 
                  
@@ -429,8 +429,7 @@ Start-PodeServer {
         )
 
            New-PodeWebForm -Name 'Tags1' -ScriptBlock {
-            # $WebEvent.Data | Out-Default
-            # 'UUU2' + $multiline | Out-Default
+            
 
             $TagFileName = $WebEvent.Data['TagFileName']
             $TagTitle = $WebEvent.Data['TagTitle']
@@ -440,13 +439,13 @@ Start-PodeServer {
             $Description = $multiline
             
             # Create md file
-            $outfile = "/home/eric/dev/pode_test1/Public/topics/" + $TagFileName + ".md"
+            $outfile = "/home/eric/dev/pode_webapp/public/topics/" + $TagFileName + ".md"
             $title = "# " + $TagTitle
             Set-Content -Path $outfile -Value $title
             Add-Content -Path $outfile -Value $Description
 
              # Define database path
-                $global:Database = "/home/eric/dev/pode_test1/data.db"
+                $global:Database = "/home/eric/dev/ppode_webapp/data.db"
 
                 # Create a Table
                 $QueryCreate = "CREATE TABLE IF NOT EXISTS Tags (Id INTEGER PRIMARY KEY, TagFilename TEXT, TagTitle TEXT, TagType TEXT, TagName TEXT,
@@ -459,7 +458,7 @@ Start-PodeServer {
 
                 # Select Data
                 $Media = Invoke-SqliteQuery -Query "SELECT * FROM Tags" -DataSource $Database
-                #$Media | Format-Table | Out-Default
+               
 
                 Move-PodeWebUrl -Url '/pages/thankyou'
 
@@ -486,17 +485,14 @@ Start-PodeServer {
             }
 
             New-PodeWebModal -Name 'Description' -AsForm -Content @(   
-                #$global:Database = "/home/eric/dev/pode_test1/data.db"
+                $global:Database = "/home/eric/dev/pode_webapp/data.db"
                 $global:Media = Invoke-SqliteQuery -Query "SELECT * FROM Media where ID = $($WebEvent.Query['ID'])" -DataSource $Database
-                #"PPP99" + $Media + $Media.MediaType | Format-Table | Out-Default
-
-                
         
                 New-PodeWebTextbox -Name 'MultiLine' -Multiline -Value "$($Media.Description)" -Size 20
             ) -ScriptBlock {
                 
                 Write-Host 'Submit button clicked!'
-                 #'UUU1' + $WebEvent.Data['Multiline'] | Out-Default
+                
                   
                   $global:multiline = $WebEvent.Data['Multiline'] 
                  
@@ -535,8 +531,7 @@ Start-PodeServer {
         )
 
            New-PodeWebForm -Name 'Example1' -ScriptBlock {
-            # $WebEvent.Data | Out-Default
-            # 'UUU2' + $multiline | Out-Default
+            
 
             $MediaFileName = $WebEvent.Data['MediaFileName']
             $MediaTitle = $WebEvent.Data['MediaTitle']
@@ -550,13 +545,13 @@ Start-PodeServer {
             $Description = $multiline
             
             # Create md file
-            $outfile = "/home/eric/dev/pode_test1/Public/topics/" + $MediaFileName + ".md"
+            $outfile = "/home/eric/dev/pode_webapp/public/topics/" + $MediaFileName + ".md"
             $title = "# " + $MediaTitle
             Set-Content -Path $outfile -Value $title
             Add-Content -Path $outfile -Value $Description
 
              # Define database path
-                $global:Database = "/home/eric/dev/pode_test1/data.db"
+                $global:Database = "/home/eric/dev/pode_webapp/data.db"
 
         
 
@@ -566,7 +561,7 @@ Start-PodeServer {
 
                 # Select Data
                 $Media = Invoke-SqliteQuery -Query "SELECT * FROM Media" -DataSource $Database
-                #$Media | Format-Table | Out-Default
+                
 
                 Move-PodeWebUrl -Url '/pages/thankyou'
 
@@ -598,17 +593,15 @@ Start-PodeServer {
             }
 
             New-PodeWebModal -Name 'Description' -AsForm -Content @(   
-                $global:Database = "/home/eric/dev/pode_test1/data.db"
+                $global:Database = "/home/eric/dev/pode_webapp/data.db"
                 $global:People = Invoke-SqliteQuery -Query "SELECT * FROM People where ID = $($WebEvent.Query['ID'])" -DataSource $Database
-                #"PPP199" + $People + $People.MediaType | Format-Table | Out-Default
-
-                
+               
         
                 New-PodeWebTextbox -Name 'MultiLine' -Multiline -Value "$($People.Description)" -Size 20
             ) -ScriptBlock {
                 
                 Write-Host 'Submit button clicked!'
-                 #'UUU1' + $WebEvent.Data['Multiline'] | Out-Default
+               
                   
                   $global:multiline = $WebEvent.Data['Multiline'] 
                  
@@ -649,8 +642,6 @@ Start-PodeServer {
 
         New-PodeWebForm -Name 'Example2' -ScriptBlock {
             
-             #$WebEvent.Data | Out-Default
-             #'UUU2' + $multiline | Out-Default
 
             $PeopleFileName = $WebEvent.Data['PeopleFileName']
             $PeopleTitle = $WebEvent.Data['PeopleTitle']
@@ -672,17 +663,15 @@ Start-PodeServer {
             $Tags = $WebEvent.Data['Tags']
             $Description = $multiline
 
-
-            #"UU3" + $PeopleFileName + " " + $email | Out-Default
             
             # Create md file
-            $outfile = "/home/eric/dev/pode_test1/Public/topics/" + $PeopleFileName + ".md"
+            $outfile = "/home/eric/dev/pode_webapp/public/topics/" + $PeopleFileName + ".md"
             $title = "# " + $PeopleTitle
             Set-Content -Path $outfile -Value $title
             Add-Content -Path $outfile -Value $Description
 
              # Define database path
-                $global:Database = "/home/eric/dev/pode_test1/data.db"
+                $global:Database = "/home/eric/dev/pode_webapp/data.db"
 
                 # Insert Data
                 #$QueryUpdate = "UPDATE People SET PeopleFileName = '$PeopleFileName', PeopleTitle = '$PeopleTitle', PeopleType = '$PeopleType', email = '$email', Facebook = '$Facebook', Image = '$Image', Parents = '$Parents', Siblings = '$Siblings', Children = '$Children', Birthday = '$Birthday', Description = '$Description' WHERE ID = $($WebEvent.Query['ID'])"
@@ -691,7 +680,7 @@ Start-PodeServer {
 
                 # Select Data
                 $People = Invoke-SqliteQuery -Query "SELECT * FROM People" -DataSource $Database
-                #$People | Format-Table | Out-Default
+                
 
                 Move-PodeWebUrl -Url '/pages/thankyou'
            } -Content @(
@@ -735,17 +724,14 @@ Start-PodeServer {
             }
 
             New-PodeWebModal -Name 'Description' -AsForm -Content @(   
-                $global:Database = "/home/eric/dev/pode_test1/data.db"
+                $global:Database = "/home/eric/dev/pode_webapp/data.db"
                 $global:Events = Invoke-SqliteQuery -Query "SELECT * FROM Events where ID = $($WebEvent.Query['ID'])" -DataSource $Database
-                #"PPP499" + $Events + $Events.EventType | Format-Table | Out-Default
-
-                
+               
         
                 New-PodeWebTextbox -Name 'MultiLine' -Multiline -Value "$($Events.Description)" -Size 20
             ) -ScriptBlock {
                 
                 Write-Host 'Submit button clicked!'
-                 #'UUU1' + $WebEvent.Data['Multiline'] | Out-Default
                   
                   $global:multiline = $WebEvent.Data['Multiline'] 
                  
@@ -785,9 +771,6 @@ Start-PodeServer {
         )
 
         New-PodeWebForm -Name 'Example2' -ScriptBlock {
-            
-             #$WebEvent.Data | Out-Default
-             #'UUU2' + $multiline | Out-Default
 
             $EventFileName = $WebEvent.Data['EventFileName']
             $Eventtitle = $WebEvent.Data['Eventtitle']
@@ -800,16 +783,15 @@ Start-PodeServer {
             $Tags = $WebEvent.Data['Tags']
             $Description = $multiline
 
-           # "UU3" + $EventFileName + " " + $email | Out-Default
             
             # Create md file
-            $outfile = "/home/eric/dev/pode_test1/Public/topics/" + $EventFileName + ".md"
+            $outfile = "/home/eric/dev/pode_webapp/public/topics/" + $EventFileName + ".md"
             $title = "# " + $Eventtitle
             Set-Content -Path $outfile -Value $title
             Add-Content -Path $outfile -Value $Description
 
              # Define database path
-                $global:Database = "/home/eric/dev/pode_test1/data.db"
+                $global:Database = "/home/eric/dev/pode_webapp/data.db"
 
                 # Insert Data
                 #$QueryUpdate = "UPDATE People SET PeopleFileName = '$PeopleFileName', PeopleTitle = '$PeopleTitle', PeopleType = '$PeopleType', email = '$email', Facebook = '$Facebook', Image = '$Image', Parents = '$Parents', Siblings = '$Siblings', Children = '$Children', Birthday = '$Birthday', Description = '$Description' WHERE ID = $($WebEvent.Query['ID'])"
@@ -818,7 +800,7 @@ Start-PodeServer {
 
                 # Select Data
                 $Events = Invoke-SqliteQuery -Query "SELECT * FROM Events" -DataSource $Database
-                #$Events | Format-Table | Out-Default
+                
 
                 Move-PodeWebUrl -Url '/pages/thankyou'
            } -Content @(
@@ -852,17 +834,14 @@ Start-PodeServer {
             }
 
             New-PodeWebModal -Name 'Description' -AsForm -Content @(   
-                $global:Database = "/home/eric/dev/pode_test1/data.db"
+                $global:Database = "/home/eric/dev/pode_webapp/data.db"
                 $global:Tags = Invoke-SqliteQuery -Query "SELECT * FROM Tags where ID = $($WebEvent.Query['ID'])" -DataSource $Database
-                #"PPP599" + $Tags + $Tags.TagType | Format-Table | Out-Default
 
-                
-        
                 New-PodeWebTextbox -Name 'MultiLine' -Multiline -Value "$($Tags.Description)" -Size 20
             ) -ScriptBlock {
                 
                 Write-Host 'Submit button clicked!'
-                 #'UUU1' + $WebEvent.Data['Multiline'] | Out-Default
+                
                   
                   $global:multiline = $WebEvent.Data['Multiline'] 
                  
@@ -903,8 +882,7 @@ Start-PodeServer {
 
         New-PodeWebForm -Name 'Example2' -ScriptBlock {
             
-            # $WebEvent.Data | Out-Default
-            # 'UUU2' + $multiline | Out-Default
+          
 
             $TagFileName = $WebEvent.Data['TagFileName']
             $TagTitle = $WebEvent.Data['TagTitle']
@@ -913,16 +891,16 @@ Start-PodeServer {
             $Image = $WebEvent.Data['Image']
             $Description = $multiline
 
-            #"UU3" + $TagFileName + " " + $TagTitle | Out-Default
+          
             
             # Create md file
-            $outfile = "/home/eric/dev/pode_test1/Public/topics/" + $TagFileName + ".md"
+            $outfile = "/home/eric/dev/pode_webapp/public/topics/" + $TagFileName + ".md"
             $title = "# " + $TagTitle
             Set-Content -Path $outfile -Value $title
             Add-Content -Path $outfile -Value $Description
 
              # Define database path
-                $global:Database = "/home/eric/dev/pode_test1/data.db"
+                $global:Database = "/home/eric/dev/pode_webapp/data.db"
 
                 # Insert Data
                 #$QueryUpdate = "UPDATE People SET PeopleFileName = '$PeopleFileName', PeopleTitle = '$PeopleTitle', PeopleType = '$PeopleType', email = '$email', Facebook = '$Facebook', Image = '$Image', Parents = '$Parents', Siblings = '$Siblings', Children = '$Children', Birthday = '$Birthday', Description = '$Description' WHERE ID = $($WebEvent.Query['ID'])"
@@ -931,7 +909,7 @@ Start-PodeServer {
 
                 # Select Data
                 $People = Invoke-SqliteQuery -Query "SELECT * FROM People" -DataSource $Database
-                #$People | Format-Table | Out-Default
+               
 
                 Move-PodeWebUrl -Url '/pages/thankyou'
            } -Content @(
@@ -972,9 +950,9 @@ tr:nth-child(even) {
 </style>
 <table>
 <th>ID</th><th>MediaFileName</th><th>MediaTitle</th><th>MediaType</th><th>Creator</th><th>Service</th><th>Manage</th>"
-        $global:Database = "/home/eric/dev/pode_test1/data.db"
+        $global:Database = "/home/eric/dev/pode_webapp/data.db"
                 $Media = Invoke-SqliteQuery -Query "SELECT * FROM Media" -DataSource $Database
-                #$Media | Format-Table | Out-Default
+               
         foreach ($item in $Media) {
           New-PodeWebRaw -Value "<tr>
           <td>$($item.ID)</td><td>$($item.MediaFileName)</td><td>$($item.MediaTitle)</td>
@@ -1016,9 +994,9 @@ tr:nth-child(even) {
 </style>
 <table>
 <th>ID</th><th>PeopleFileName</th><th>PeopleTitle</th><th>PeopleType</th><th>Email</th><th>Facebook</th><th>LinkedIn</th><th>Manage</th>"
-        $global:Database = "/home/eric/dev/pode_test1/data.db"
+        $global:Database = "/home/eric/dev/pode_webapp/data.db"
                 $People = Invoke-SqliteQuery -Query "SELECT * FROM People" -DataSource $Database
-                #$People | Format-Table | Out-Default
+                
         foreach ($item in $People) {
           New-PodeWebRaw -Value "<tr>
           <td>$($item.ID)</td><td>$($item.PeopleFileName)</td><td>$($item.PeopleTitle)</td>
@@ -1058,9 +1036,9 @@ tr:nth-child(even) {
 </style>
 <table>
 <th>ID</th><th>EventFileName</th><th>EventTitle</th><th>EventType</th><th>People</th><th>Location</th><th>StartDate</th><th>Manage</th>"
-        $global:Database = "/home/eric/dev/pode_test1/data.db"
+        $global:Database = "/home/eric/dev/pode_webapp/data.db"
                 $Events = Invoke-SqliteQuery -Query "SELECT * FROM Events" -DataSource $Database
-                # $Events | Format-Table | Out-Default
+               
         foreach ($item in $Events) {
           New-PodeWebRaw -Value "<tr>
           <td>$($item.ID)</td><td>$($item.EventFileName)</td><td>$($item.EventTitle)</td>
@@ -1102,9 +1080,9 @@ tr:nth-child(even) {
 </style>
 <table>
 <th>ID</th><th>TagFileName</th><th>TagTitle</th><th>TagType</th><th>TagName</th><th>Image</th><th>Manage</th>"
-        $global:Database = "/home/eric/dev/pode_test1/data.db"
+        $global:Database = "/home/eric/dev/pode_webapp/data.db"
                 $Tags = Invoke-SqliteQuery -Query "SELECT * FROM Tags" -DataSource $Database
-                #$Tags | Format-Table | Out-Default
+               
         foreach ($item in $Tags) {
           New-PodeWebRaw -Value "<tr>
           <td>$($item.ID)</td><td>$($item.TagFileName)</td><td>$($item.TagTitle)</td>
@@ -1146,7 +1124,7 @@ Add-PodeWebPage -Name 'Deleted' -Hide -Layouts @(
 # ========================
 Add-PodeWebPage -Name 'DeleteConfirm' -Hide -ScriptBlock {
 
-    #"ZZZ1" + $WebEvent.Query['ID'] | Out-Default
+   
     New-PodeWebCard -Content @(
     
      New-PodeWebHeader -Value "Are you sure that you want to delete ID=$($WebEvent.Query['ID'])?" -Size 1 
@@ -1154,11 +1132,9 @@ Add-PodeWebPage -Name 'DeleteConfirm' -Hide -ScriptBlock {
 
      New-PodeWebContainer -Content @(
             New-PodeWebTable -Name 'Services' -ScriptBlock {
-                #"YYY22" | Out-Default
-                $global:Database = "/home/eric/dev/pode_test1/data.db"
+               
+                $global:Database = "/home/eric/dev/pode_webapp/data.db"
                 $Media = Invoke-SqliteQuery -Query "SELECT * FROM Media where ID = $($WebEvent.Query['ID'])" -DataSource $Database
-                #$Media | Format-Table | Out-Default
-
                 
 
                 foreach ($item in $Media) {
@@ -1184,7 +1160,6 @@ Add-PodeWebPage -Name 'DeleteConfirm' -Hide -ScriptBlock {
 
             New-PodeWebCard -Content @(
                 New-PodeWebForm -Name 'DeleteConfirm' -ScriptBlock {
-                     #'ZZZ1' + $WebEvent.Data['DeleteConfirm'] | Out-Default
 
                      if ($WebEvent.Data['DeleteConfirm'].Contains("No")) {
                         Move-PodeWebUrl -Url '/groups/Media/pages/Manage_Media'
@@ -1208,7 +1183,6 @@ Add-PodeWebPage -Name 'DeleteConfirm' -Hide -ScriptBlock {
 # ========================
 Add-PodeWebPage -Name 'DeleteConfirmPeople' -Hide -ScriptBlock {
 
-    #"ZZZ1" + $WebEvent.Query['ID'] | Out-Default
     New-PodeWebCard -Content @(
     
      New-PodeWebHeader -Value "Are you sure that you want to delete ID=$($WebEvent.Query['ID'])?" -Size 1 
@@ -1216,12 +1190,10 @@ Add-PodeWebPage -Name 'DeleteConfirmPeople' -Hide -ScriptBlock {
 
      New-PodeWebContainer -Content @(
             New-PodeWebTable -Name 'DeleteConfirm1' -ScriptBlock {
-                #"YYY22" | Out-Default
-                $global:Database = "/home/eric/dev/pode_test1/data.db"
+               
+                $global:Database = "/home/eric/dev/pode_webapp/data.db"
                 $Media = Invoke-SqliteQuery -Query "SELECT * FROM People where ID = $($WebEvent.Query['ID'])" -DataSource $Database
-                #$Media | Format-Table | Out-Default
-
-                
+            
 
                 foreach ($item in $Media) {
                     $global:ID_val = $item.ID
@@ -1246,8 +1218,7 @@ Add-PodeWebPage -Name 'DeleteConfirmPeople' -Hide -ScriptBlock {
 
             New-PodeWebCard -Content @(
                 New-PodeWebForm -Name 'DeleteConfirm' -ScriptBlock {
-                     #'ZZZ1' + $WebEvent.Data['DeleteConfirm'] | Out-Default
-
+                    
                      if ($WebEvent.Data['DeleteConfirm'].Contains("No")) {
                         Move-PodeWebUrl -Url '/groups/People/pages/Manage_People'
                      }
@@ -1270,7 +1241,7 @@ Add-PodeWebPage -Name 'DeleteConfirmPeople' -Hide -ScriptBlock {
 # ========================
 Add-PodeWebPage -Name 'DeleteConfirmEvents' -Hide -ScriptBlock {
 
-    #"ZZZ1" + $WebEvent.Query['ID'] | Out-Default
+   
     New-PodeWebCard -Content @(
     
      New-PodeWebHeader -Value "Are you sure that you want to delete ID=$($WebEvent.Query['ID'])?" -Size 1 
@@ -1278,10 +1249,10 @@ Add-PodeWebPage -Name 'DeleteConfirmEvents' -Hide -ScriptBlock {
 
      New-PodeWebContainer -Content @(
             New-PodeWebTable -Name 'DeleteConfirm1' -ScriptBlock {
-                #"YYY22" | Out-Default
-                $global:Database = "/home/eric/dev/pode_test1/data.db"
+                
+                $global:Database = "/home/eric/dev/pode_webapp/data.db"
                 $Events = Invoke-SqliteQuery -Query "SELECT * FROM Events where ID = $($WebEvent.Query['ID'])" -DataSource $Database
-                #$Events | Format-Table | Out-Default
+                
 
                 
 
@@ -1308,7 +1279,7 @@ Add-PodeWebPage -Name 'DeleteConfirmEvents' -Hide -ScriptBlock {
 
             New-PodeWebCard -Content @(
                 New-PodeWebForm -Name 'DeleteConfirm' -ScriptBlock {
-                    # 'ZZZ1' + $WebEvent.Data['DeleteConfirm'] | Out-Default
+                    
 
                      if ($WebEvent.Data['DeleteConfirm'].Contains("No")) {
                         Move-PodeWebUrl -Url '/groups/Events/pages/Manage_Events'
@@ -1332,7 +1303,7 @@ Add-PodeWebPage -Name 'DeleteConfirmEvents' -Hide -ScriptBlock {
 # ========================
 Add-PodeWebPage -Name 'DeleteConfirmTags' -Hide -ScriptBlock {
 
-    #"ZZZ1" + $WebEvent.Query['ID'] | Out-Default
+    
     New-PodeWebCard -Content @(
     
      New-PodeWebHeader -Value "Are you sure that you want to delete ID=$($WebEvent.Query['ID'])?" -Size 1 
@@ -1340,11 +1311,9 @@ Add-PodeWebPage -Name 'DeleteConfirmTags' -Hide -ScriptBlock {
 
      New-PodeWebContainer -Content @(
             New-PodeWebTable -Name 'DeleteConfirm1' -ScriptBlock {
-                #"YYY22" | Out-Default
-                $global:Database = "/home/eric/dev/pode_test1/data.db"
+                
+                $global:Database = "/home/eric/dev/pode_webapp/data.db"
                 $Tags = Invoke-SqliteQuery -Query "SELECT * FROM Tags where ID = $($WebEvent.Query['ID'])" -DataSource $Database
-                #$Events | Format-Table | Out-Default
-
                 
 
                 foreach ($item in $Tags) {
@@ -1367,7 +1336,7 @@ Add-PodeWebPage -Name 'DeleteConfirmTags' -Hide -ScriptBlock {
 
             New-PodeWebCard -Content @(
                 New-PodeWebForm -Name 'DeleteConfirm' -ScriptBlock {
-                    # 'ZZZ1' + $WebEvent.Data['DeleteConfirm'] | Out-Default
+                    
 
                      if ($WebEvent.Data['DeleteConfirm'].Contains("No")) {
                         Move-PodeWebUrl -Url '/groups/Tags/pages/Manage_Tags'
@@ -1401,14 +1370,14 @@ Add-PodeWebPage -Name Charts -Icon 'bar-chart-2' -Group 'Groups' -Layouts @(
 #>
 
 Add-PodeWebPage -Name Media-View -Hide  -ScriptBlock {
-     #"ZZZ98" + $WebEvent.Query['ID'] | Out-Default
+     
      $global:ID_value = $WebEvent.Query['ID']
     New-PodeWebCard -Content @(
 
-    $global:Database = "/home/eric/dev/pode_test1/data.db"
+    $global:Database = "/home/eric/dev/pode_webapp/data.db"
                 $global:Media = Invoke-SqliteQuery -Query "SELECT * FROM Media where ID=$ID_value" -DataSource $Database
                
-                "ZZZ99" + $Media.MediaFilename | Out-Default
+                
         New-PodeWebIFrame -Url "/html/$($Media.MediaFileName).html"
       #New-PodeWebText -Value "Media Filename:	$($Media.MediaFileName)"
 
@@ -1451,7 +1420,7 @@ New-PodeWebRaw -Value "<p><b>Creators:</b></p>
 $creator1 = $Media.Creator.split(",")
     foreach ($person in $creator1) {
         $People1 = Invoke-SqliteQuery -Query "SELECT * FROM People where ID=$($person)" -DataSource $Database
-        #"ZZZ77 " + $People1.PeopleTitle | Out-Default
+        
         New-PodeWebRaw -Value "<tr><td><a href='/pages/people-view?id=$($People1.ID)'>$($People1.ID)</a></td><td>$($People1.PeopleTitle)</td></tr>"
     }
 
@@ -1462,19 +1431,15 @@ $creator1 = $Media.Creator.split(",")
     }
 
 Add-PodeWebPage -Name People-View -Hide  -ScriptBlock {
-     #"ZZZ100 " + $WebEvent.Query['ID'] | Out-Default
+     
      $global:ID_value = $WebEvent.Query['ID']
     New-PodeWebCard -Content @(
 
-    $global:Database = "/home/eric/dev/pode_test1/data.db"
+    $global:Database = "/home/eric/dev/pode_webapp/data.db"
                 $global:People = Invoke-SqliteQuery -Query "SELECT * FROM People where ID=$ID_value" -DataSource $Database
                
-               # "ZZZ99 " + $People.PeopleFilename | Out-Default
-               # "ZZZ98 " + $People.Parents | Out-Default
-    
 
         New-PodeWebIFrame -Url "/html/$($People.PeopleFileName).html"
-      #New-PodeWebText -Value "Media Filename:	$($Media.MediaFileName)"
 
 
     #++++++++++++++++    
@@ -1533,7 +1498,7 @@ tr:nth-child(even) {
 $parents1 = $People.Parents.split(",")
     foreach ($person in $parents1) {
         $People1 = Invoke-SqliteQuery -Query "SELECT * FROM People where ID=$($person)" -DataSource $Database
-       # "ZZZ96 " + $People1.PeopleTitle | Out-Default
+       
         New-PodeWebRaw -Value "<tr><td><a href='/pages/people-view?id=$($People1.ID)'>$($People1.ID)</a></td><td>$($People1.PeopleTitle)</td></tr>"
     }
 
@@ -1567,7 +1532,7 @@ tr:nth-child(even) {
 $spouse1 = $People.Spouse.split(",")
     foreach ($person in $spouse1) {
         $People1 = Invoke-SqliteQuery -Query "SELECT * FROM People where ID=$($person)" -DataSource $Database
-       # "ZZZ96 " + $People1.PeopleTitle | Out-Default
+      
         New-PodeWebRaw -Value "<tr><td><a href='/pages/people-view?id=$($People1.ID)'>$($People1.ID)</a></td><td>$($People1.PeopleTitle)</td></tr>"
     }
 
@@ -1581,7 +1546,7 @@ New-PodeWebRaw -Value "<p><b>Children:</b></p>
 $children1 = $People.Children.split(",")
     foreach ($person in $children1) {
         $People1 = Invoke-SqliteQuery -Query "SELECT * FROM People where ID=$($person)" -DataSource $Database
-        #"ZZZ96 " + $People1.PeopleTitle | Out-Default
+       
         New-PodeWebRaw -Value "<tr><td><a href='/pages/people-view?id=$($People1.ID)'>$($People1.ID)</a></td><td>$($People1.PeopleTitle)</td></tr>"
     }
 
@@ -1595,7 +1560,7 @@ $children1 = $People.Children.split(",")
 $siblings1 = $People.siblings.split(",")
     foreach ($person in $siblings1) {
         $People1 = Invoke-SqliteQuery -Query "SELECT * FROM People where ID=$($person)" -DataSource $Database
-        #"ZZZ96 " + $People1.PeopleTitle | Out-Default
+       
         New-PodeWebRaw -Value "<tr><td><a href='/pages/people-view?id=$($People1.ID)'>$($People1.ID)</a></td><td>$($People1.PeopleTitle)</td></tr>"
     }
 
@@ -1608,15 +1573,12 @@ $siblings1 = $People.siblings.split(",")
     }
 
 Add-PodeWebPage -Name Event-View -Hide  -ScriptBlock {
-     #"ZZZ100 " + $WebEvent.Query['ID'] | Out-Default
+    
      $global:ID_value = $WebEvent.Query['ID']
     New-PodeWebCard -Content @(
 
-    $global:Database = "/home/eric/dev/pode_test1/data.db"
+    $global:Database = "/home/eric/dev/pode_webapp/data.db"
                 $global:Events = Invoke-SqliteQuery -Query "SELECT * FROM Events where ID=$ID_value" -DataSource $Database
-               
-                #"ZZZ99 " + $Events.EventFileName | Out-Default
-                #"ZZZ98 " + $Events.EventTitle | Out-Default
     
 
         New-PodeWebIFrame -Url "/html/$($Events.EventFileName).html"
@@ -1681,91 +1643,25 @@ tr:nth-child(even) {
 $people_e = $Events.People.split(",")
     foreach ($person in $people_e) {
         $People1 = Invoke-SqliteQuery -Query "SELECT * FROM People where ID=$($person)" -DataSource $Database
-        #"ZZZ96 " + $People1.PeopleTitle | Out-Default
+        
         New-PodeWebRaw -Value "<tr><td><a href='/pages/people-view?id=$($People1.ID)'>$($People1.ID)</a></td><td>$($People1.PeopleTitle)</td></tr>"
     }
 
     New-PodeWebRaw -Value "</table>" 
     #++++++++++++++++   
 
-<#
-
-    New-PodeWebRaw -Value "<style>
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
-
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
-
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
-</style>
-
-<p><b>Spouse:</b></p>
-<table>
-<th>ID</th><th>Spouse</th>"
-
-$spouse1 = $People.Spouse.split(",")
-    foreach ($person in $spouse1) {
-        $People1 = Invoke-SqliteQuery -Query "SELECT * FROM People where ID=$($person)" -DataSource $Database
-        "ZZZ96 " + $People1.PeopleTitle | Out-Default
-        New-PodeWebRaw -Value "<tr><td><a href='/pages/people-view?id=$($People1.ID)'>$($People1.ID)</a></td><td>$($People1.PeopleTitle)</td></tr>"
-    }
-
-    New-PodeWebRaw -Value "</table>" 
-    #++++++++++++++++   
-
-New-PodeWebRaw -Value "<p><b>Children:</b></p>
-<table>
-<th>ID</th><th>Children</th>"
-
-$children1 = $People.Children.split(",")
-    foreach ($person in $children1) {
-        $People1 = Invoke-SqliteQuery -Query "SELECT * FROM People where ID=$($person)" -DataSource $Database
-        "ZZZ96 " + $People1.PeopleTitle | Out-Default
-        New-PodeWebRaw -Value "<tr><td><a href='/pages/people-view?id=$($People1.ID)'>$($People1.ID)</a></td><td>$($People1.PeopleTitle)</td></tr>"
-    }
-
-    New-PodeWebRaw -Value "</table>" 
-    #++++++++++++++++   
-
-    New-PodeWebRaw -Value "<p><b>Siblings:</b></p>
-<table>
-<th>ID</th><th>Siblings</th>"
-
-$siblings1 = $People.siblings.split(",")
-    foreach ($person in $siblings1) {
-        $People1 = Invoke-SqliteQuery -Query "SELECT * FROM People where ID=$($person)" -DataSource $Database
-        "ZZZ96 " + $People1.PeopleTitle | Out-Default
-        New-PodeWebRaw -Value "<tr><td><a href='/pages/people-view?id=$($People1.ID)'>$($People1.ID)</a></td><td>$($People1.PeopleTitle)</td></tr>"
-    }
-
-    New-PodeWebRaw -Value "</table>" 
-    #++++++++++++++++   
-#>
 
 
     )
     }
 Add-PodeWebPage -Name Tag-View -Hide  -ScriptBlock {
-     #"ZZZ101 " + $WebEvent.Query['ID'] | Out-Default
+    
      $global:ID_value = $WebEvent.Query['ID']
     New-PodeWebCard -Content @(
 
-    $global:Database = "/home/eric/dev/pode_test1/data.db"
+    $global:Database = "/home/eric/dev/pode_webapp/data.db"
                 $global:Tags = Invoke-SqliteQuery -Query "SELECT * FROM Tags where ID=$ID_value" -DataSource $Database
-               
-                #"ZZZ99 " + $Tags.TagFileName | Out-Default
-                #"ZZZ98 " + $Tags.TagName | Out-Default
-
-                
+                         
     
 
         New-PodeWebIFrame -Url "/html/$($Tags.TagFileName).html"
