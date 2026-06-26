@@ -2,7 +2,7 @@
 
 The application created with the Pode.Web module allows you to add media (TV shows, movies, books, and albums), people (friends, family, authors, directors, actors, artists, etc.), and events (concerts, sporting events, vacations, etc.) by using web forms. The data from the web forms will be stored to a sqlite database. It includes connections between the three entities.
 
-Prerequisites: Powershell and DITA Open Tool Kit.
+*Prerequisites:* Powershell and DITA Open Tool Kit.
 
 The application will also require the following Powershell modules:
 
@@ -24,7 +24,7 @@ Please refer to [PowerShell and Pode.Web on Ubuntu](https://hypot2noose.blogspot
 ### Run Application
 
 1. Open terminal window.
-2. cd <yourpath>/web>
+2. Type *cd <your_path>/web>*
 3. Type *pwsh*.
 4. Tyoe *./cms.ps1*
 
@@ -96,7 +96,7 @@ Note: Remember to *Enter Description*, which is a separate popup window.
 
 #### Convert Markdown Files to HTML
 
-Each time you submit a web form a markdown file is created in the following folder *<your_path>/pode_webapp/Public/topics*. You need to periodically convert these markdown files into HTML files. 
+Each time you submit a web form a markdown file is created in the following folder *<your_path>/pode_webapp/Public/topics*. You need to periodically convert these markdown files into HTML files. The view function uses the HTML format to display a visually appealing format.
 
 
 
@@ -117,3 +117,17 @@ for entry in $files
           ~/dita-ot-4.4/bin/dita --input=$entry --format=html5 --output=html
  done
 ```
+## References
+
+[Pode Webapp Software Requirements](https://hypot2noose.blogspot.com/2026/06/software-requirements-document-for.html)
+
+[Pode.Web Application](https://hypot2noose.blogspot.com/2026/03/podeweb-application.html)
+
+[PowerShell and Pode.Web on Ubuntu](https://hypot2noose.blogspot.com/2026/03/powershell-and-podeweb-on-ubuntu.html)
+
+[PowerShell and Pode.Web on Ubuntu](https://hypot2noose.blogspot.com/2026/03/powershell-and-podeweb-on-ubuntu.html)
+
+[Pode.Web Tutorial](https://badgerati.github.io/Pode.Web/0.8.3/)
+
+[Pode Tutorial](https://pode.readthedocs.io/en/latest/)
+
