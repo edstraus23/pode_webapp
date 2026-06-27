@@ -26,7 +26,7 @@ Please refer to [PowerShell and Pode.Web on Ubuntu](https://hypot2noose.blogspot
 1. Open terminal window.
 2. Type *cd <your_path>/pode_webapp*
 3. Type *pwsh*.
-4. Tyoe *./cms.ps1*
+4. Type *./cms.ps1*
 
 Web application starts up running on localhost:8081.
 
